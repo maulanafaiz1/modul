@@ -79,7 +79,7 @@ if menu == "Halaman Utama & Panduan":
         """)
 
 # ==============================================================================
-# 2. MATERI TRANSKRIPSI
+# 2. MATERI TRANSKRIPSI (DENGAN TAMBAHAN VIDEO ANIMASI)
 # ==============================================================================
 elif menu == "1. Materi Transkripsi":
     st.title("📑 Tahap 1: Transkripsi (Penyalinan Kode)")
@@ -94,6 +94,12 @@ elif menu == "1. Materi Transkripsi":
     * Sitosin (**C**) pada DNA dicetak menjadi Guanin (**G**) pada RNA.
     * Guanin (**G**) pada DNA dicetak menjadi Sitosin (**C**) pada RNA.
     """)
+    
+    # --- ELEMEN BARU: SEMATAN VIDEO TRANSKRIPSI ---
+    st.subheader("🎬 Video Animasi Mekanisme Transkripsi")
+    st.caption("Tonton video di bawah ini untuk melihat bagaimana untai mRNA disintesis secara dinamis di dalam inti sel:")
+    # Menyematkan video edukasi visual transkripsi dari YouTube
+    st.video("https://www.youtube.com/watch?v=gG7uCskUOrA")
     
     # Elemen Interaktif Expander untuk Detail Proses
     with st.expander("🔍 Lihat 3 Langkah Utama Transkripsi"):
@@ -116,7 +122,7 @@ elif menu == "1. Materi Transkripsi":
             st.error("❌ Belum tepat. Ingat, pada RNA tidak ada Timin (T), melainkan digantikan oleh Urasil (U).")
 
 # ==============================================================================
-# 3. MATERI TRANSLASI
+# 3. MATERI TRANSLASI (DENGAN TAMBAHAN VIDEO ANIMASI)
 # ==============================================================================
 elif menu == "2. Materi Translasi":
     st.title("📑 Tahap 2: Translasi (Penerjemahan Kode)")
@@ -125,6 +131,12 @@ elif menu == "2. Materi Translasi":
     Di ribosom inilah terjadi **Translasi**, yaitu proses penerjemahan urutan nukleotida (kodon) 
     pada mRNA menjadi urutan asam amino yang menyusun protein.
     """)
+    
+    # --- ELEMEN BARU: SEMATAN VIDEO TRANSLASI ---
+    st.subheader("🎬 Video Animasi Mekanisme Translasi")
+    st.caption("Tonton video di bawah ini untuk memvisualisasikan bagaimana ribosom membaca kodon triplet menjadi rantai asam amino:")
+    # Menyematkan video edukasi visual translasi dari YouTube
+    st.video("https://www.youtube.com/watch?v=5bLEDd-PSTQ")
     
     # Menampilkan Tabel Kodon Interaktif bawaan Streamlit (Menggunakan Dataframe)
     st.subheader("📋 Kamus Kodon Asam Amino Digital")
