@@ -1,208 +1,233 @@
 import streamlit as st
+import pandas as pd
 
-# ==========================================
-# CONFIGURE PAGE
-# ==========================================
+# ==============================================================================
+# CONFIRGURASI HALAMAN & TEMA (Karakteristik User-Friendly)
+# ==============================================================================
 st.set_page_config(
     page_title="E-Modul Bioinformatika: Sintesis Protein",
     page_icon="🧬",
-    layout="wide"
+    layout="wide",
+    initial_sidebar_state="expanded"
 )
 
-# Fungsi bantuan untuk simulasi Bioinformatika sederhana
-def transkripsi(dna):
-    # Mengganti Timin (T) dengan Urasil (U) untuk membentuk mRNA
-    return dna.upper().replace('T', 'U')
+# Kamus Kode Genetik (Mesin Logika Transkripsi & Translasi)
+TABEL_KODON = {
+    'UUU': 'Fenilalanin (Phe)', 'UUC': 'Fenilalanin (Phe)', 'UUA': 'Leusin (Leu)', 'UUG': 'Leusin (Leu)',
+    'CUU': 'Leusin (Leu)', 'CUC': 'Leusin (Leu)', 'CUA': 'Leusin (Leu)', 'CUG': 'Leusin (Leu)',
+    'AUU': 'Isoleusin (Ile)', 'AUC': 'Isoleusin (Ile)', 'AUA': 'Isoleusin (Ile)', 'AUG': 'Metionin (Met) [START]',
+    'GUU': 'Valin (Val)', 'GUC': 'Valin (Val)', 'GUA': 'Valin (Val)', 'GUG': 'Valin (Val)',
+    'UCU': 'Serin (Ser)', 'UCC': 'Serin (Ser)', 'UCA': 'Serin (Ser)', 'UCG': 'Serin (Ser)',
+    'CCU': 'Prolin (Pro)', 'CCC': 'Prolin (Pro)', 'CCA': 'Prolin (Pro)', 'CCG': 'Prolin (Pro)',
+    'ACU': 'Treonin (Thr)', 'ACC': 'Treonin (Thr)', 'ACA': 'Treonin (Thr)', 'ACG': 'Treonin (Thr)',
+    'GCU': 'Alanin (Ala)', 'GCC': 'Alanin (Ala)', 'GCA': 'Alanin (Ala)', 'GCG': 'Alanin (Ala)',
+    'UAU': 'Tirosin (Tyr)', 'UAC': 'Tirosin (Tyr)', 'UAA': 'STOP', 'UAG': 'STOP',
+    'CAU': 'Histidin (His)', 'CAC': 'Histidin (His)', 'CAA': 'Glutamin (Gln)', 'CAG': 'Glutamin (Gln)',
+    'AAU': 'Asparagin (Asn)', 'AAC': 'Asparagin (Asn)', 'AAA': 'Lisin (Lys)', 'AAG': 'Lisin (Lys)',
+    'GAU': 'Asam Aspartat (Asp)', 'GAC': 'Asam Aspartat (Asp)', 'GAA': 'Asam Glutamat (Glu)', 'GAG': 'Asam Glutamat (Glu)',
+    'UGU': 'Sistein (Cys)', 'UGC': 'Sistein (Cys)', 'UGA': 'STOP', 'UGG': 'Triptofan (Trp)',
+    'CGU': 'Arginin (Arg)', 'CGC': 'Arginin (Arg)', 'CGA': 'Arginin (Arg)', 'CGG': 'Arginin (Arg)',
+    'AGU': 'Serin (Ser)', 'AGC': 'Serin (Ser)', 'AGA': 'Arginin (Arg)', 'AGG': 'Arginin (Arg)',
+    'GGU': 'Glisin (Gly)', 'GGC': 'Glisin (Gly)', 'GGA': 'Glisin (Gly)', 'GGG': 'Glisin (Gly)'
+}
 
-def translasi(mrna):
-    # Tabel Kodon Standar
-    tabel_kodon = {
-        'AUA':'I', 'AUC':'I', 'AUU':'I', 'AUG':'M (Start)',
-        'GUA':'V', 'GUC':'V', 'GUG':'V', 'GUU':'V',
-        'GCA':'A', 'GCC':'A', 'GCG':'A', 'GCU':'A',
-        'GAC':'D', 'GAU':'D', 'GAA':'E', 'GAG':'E',
-        'GGA':'G', 'GGC':'G', 'GGG':'G', 'GGU':'G',
-        'UCA':'S', 'UCC':'S', 'UCG':'S', 'UCU':'S',
-        'UUC':'F', 'UUU':'F', 'UUA':'L', 'UUG':'L',
-        'UAC':'Y', 'UAU':'Y', 'UAA':'STOP', 'UAG':'STOP',
-        'UGA':'STOP', 'UGC':'C', 'UGU':'C', 'UGG':'W',
-        'CUA':'L', 'CUC':'L', 'CUG':'L', 'CUU':'L',
-        'CCA':'P', 'CCC':'P', 'CCG':'P', 'CCU':'P',
-        'CAC':'H', 'CAU':'H', 'CAA':'Q', 'CAG':'Q',
-        'CGA':'R', 'CGC':'R', 'CGG':'R', 'CGU':'R',
-    }
-    
-    mrna = mrna.upper().strip()
-    asam_amino = []
-    
-    # Membaca per 3 basa nitrogen (kodon)
-    for i in range(0, len(mrna) - (len(mrna) % 3), 3):
-        kodon = mrna[i:i+3]
-        if kodon in tabel_kodon:
-            simbol = tabel_kodon[kodon]
-            asam_amino.append(simbol)
-            if "STOP" in simbol:
-                break
-                
-    return " - ".join(asam_amino) if asam_amino else "Kodon tidak dikenali atau rantai terlalu pendek."
+# ==============================================================================
+# SIDEBAR / PANEL NAVIGASI (Menggunakan Banyak Elemen Kontrol Streamlit)
+# ==============================================================================
+st.sidebar.image("https://upload.wikimedia.org/wikipedia/commons/e/e5/Untirta_logo.png", width=100)
+st.sidebar.title("Navigasi E-Modul")
+st.sidebar.caption("Pengembangan E-Modul Bioinformatika Berbantuan Python")
 
-# ==========================================
-# SIDEBAR NAVIGATION
-# ==========================================
-st.sidebar.title("🧬 E-Modul Bioinformatika")
-st.sidebar.markdown("**Materi:** Sintesis Protein")
-st.sidebar.markdown("---")
-
+# Pilihan Menu Utama
 menu = st.sidebar.radio(
-    "Daftar Isi:",
-    [
-        "Halaman Utama", 
-        "1. Konsep Sintesis Protein", 
-        "2. Pendekatan Bioinformatika", 
-        "3. Lab Virtual (Simulasi Python)", 
-        "4. Kuis Evaluasi Pemahaman"
-    ]
+    "Pilih Ruang Belajar:",
+    ["Halaman Utama & Panduan", "1. Materi Transkripsi", "2. Materi Translasi", "3. Laboratorium Komputasi (Simulasi)", "4. Evaluasi Mandiri"]
 )
 
+# Indikator Progress Belajar Siswa
 st.sidebar.markdown("---")
-st.sidebar.info("💡 **Petunjuk:** Pelajari materi secara berurutan untuk meningkatkan pemahaman konsep Anda.")
+st.sidebar.subheader("Progress Belajar Kamu")
+prog_utama = st.sidebar.slider("Persentase Pemahaman Sesi Ini", 0, 100, 25)
+st.sidebar.progress(prog_utama)
 
-# ==========================================
-# KONTEN HALAMAN
-# ==========================================
-
-# --- HALAMAN UTAMA ---
-if menu == "Halaman Utama":
-    st.title("🔬 Pengembangan E-Modul Bioinformatika Berbantuan Python")
-    st.subheader("Materi: Sintesis Protein untuk Meningkatkan Pemahaman Konsep")
+# ==============================================================================
+# 1. HALAMAN UTAMA & PANDUAN
+# ==============================================================================
+if menu == "Halaman Utama & Panduan":
+    st.title("🧬 E-Modul Bioinformatika & Sintesis Protein")
+    st.subheader("Pendekatan Komputasi untuk Memahami Proses Kehidupan Molekuler")
     
-    st.markdown("""
-    Selamat datang di **E-Modul Interaktif Bioinformatika**! 
-    
-    Modul digital ini menggabungkan konsep biologi molekuler dengan ilmu komputer (Python). Melalui pendekatan ini, Anda tidak hanya menghafal proses sintesis protein, tetapi juga memahami bagaimana data genetik diolah secara komputasi seperti yang dilakukan oleh para ilmuwan modern.
+    st.info("""
+    **Selamat Datang di Dunia Biologi Masa Depan!** E-modul ini dirancang khusus untuk membantumu memvisualisasikan bagaimana informasi genetik pada DNA 
+    diubah menjadi protein fungsional menggunakan bantuan baris kode pemrograman Python.
     """)
     
     col1, col2 = st.columns(2)
     with col1:
-        st.success("🎯 **Tujuan Pembelajaran:**\n1. Memahami tahap Transkripsi dan Translasi.\n2. Menganalisis perubahan kodon menjadi asam amino.\n3. Mengaplikasikan algoritma pemrograman Python untuk memproses data sekuens DNA.")
+        st.markdown("""
+        ### 🎯 Tujuan Pembelajaran:
+        1. Memahami mekanisme **Transkripsi** (pembentukan mRNA dari DNA cetakan).
+        2. Memahami mekanisme **Translasi** (penerjemahan mRNA menjadi rantai asam amino/protein).
+        3. Mampu menganalisis sekuens genetik menggunakan logika pemrograman sederhana.
+        """)
     with col2:
-        st.info("💻 **Prasyarat:**\nTidak perlu mahir coding! Kode Python di modul ini dirancang sesederhana mungkin agar mudah dipahami sebagai alat bantu visualisasi logika biologi.")
-
-# --- MATERI 1: KONSEP SINTESIS PROTEIN ---
-elif menu == "1. Konsep Sintesis Protein":
-    st.title("🧬 Konsep Dasar Sintesis Protein")
-    st.write("Sintesis protein adalah proses pembentukan protein dari informasi genetik yang terdapat pada DNA. Proses ini mengikuti **Dogma Sentral Biologi Molekuler**: **DNA → RNA → Protein**.")
-    
-    tab1, tab2 = st.tabs(["1. Transkripsi", "2. Translasi"])
-    
-    with tab1:
-        st.header("Tahap Transkripsi")
-        st.write("""
-        Transkripsi adalah proses penyalinan kode genetik dari rantai **DNA Template (cetakan)** menjadi rantai **mRNA (messenger RNA)**. 
-        Proses ini terjadi di dalam **Nukleus (Inti Sel)**.
-        
-        * **Aturan Pasangan Basa pada RNA:**
-            * Adenin (A) berpasangan dengan Urasil (U) *(Bukan Timin!)*
-            * Timin (T) pada DNA tetap berpasangan dengan Adenin (A) pada RNA
-            * Sitosin (C) berpasangan dengan Guanin (G)
-            * Guanin (G) berpasangan dengan Sitosin (C)
-        """)
-        
-    with tab2:
-        st.header("Tahap Translasi")
-        st.write("""
-        Translasi adalah proses penerjemahan urutan kodon (tiga basa nitrogen) pada mRNA menjadi rangkaian **Asam Amino** yang membentuk protein. 
-        Proses ini terjadi di **Ribosom** di sitoplasma.
-        
-        * **Kodon Start:** AUG (Metionin), menandai dimulainya sintesis protein.
-        * **Kodon Stop:** UAA, UAG, UGA, menandai berakhirnya pembentukan rantai protein.
+        st.markdown("""
+        ### 🛠️ Cara Menggunakan E-Modul:
+        * Gunakan menu di **Panel Kiri (Sidebar)** untuk berpindah materi.
+        * Ikuti simulasi di **Laboratorium Komputasi** untuk bereksperimen dengan DNA buatanmu sendiri.
+        * Kerjakan kuis interaktif di akhir sesi untuk menguji pemahaman konsepmu.
         """)
 
-# --- MATERI 2: PENDEKATAN BIOINFORMATIKA ---
-elif menu == "2. Pendekatan Bioinformatika":
-    st.title("💻 Bagaimana Python Membantu Bioinformatika?")
-    st.write("""
-    Dalam dunia nyata, rantai DNA manusia terdiri dari miliaran basa nitrogen. Sangat mustahil bagi ilmuwan untuk menerjemahkannya satu per satu secara manual. 
-    Di sinilah **Python** digunakan untuk mempercepat analisis string/teks data genetik.
+# ==============================================================================
+# 2. MATERI TRANSKRIPSI
+# ==============================================================================
+elif menu == "1. Materi Transkripsi":
+    st.title("📑 Tahap 1: Transkripsi (Penyalinan Kode)")
+    
+    st.markdown("""
+    **Transkripsi** adalah proses sintesis untai RNA dari cetakan DNA. Proses ini terjadi di dalam nukleus (inti sel). 
+    Enzim utama yang berperan dalam proses ini adalah **RNA Polimerase**.
+    
+    Aturan dasar pemasangan basa nitrogen dari DNA ke RNA:
+    * Adenin (**A**) pada DNA dicetak menjadi Urasil (**U**) pada RNA.
+    * Timin (**T**) pada DNA dicetak menjadi Adenin (**A**) pada RNA.
+    * Sitosin (**C**) pada DNA dicetak menjadi Guanin (**G**) pada RNA.
+    * Guanin (**G**) pada DNA dicetak menjadi Sitosin (**C**) pada RNA.
     """)
     
-    st.subheader("Logika Kode Python untuk Sintesis Protein")
-    st.write("Berikut adalah logika dasar bagaimana kita memprogram komputer untuk melakukan transkripsi dan translasi:")
-    
-    # Menampilkan potongan kode edukatif
-    st.code("""
-# 1. Logika Transkripsi (Mengganti T dengan U)
-def transkripsi(dna):
-    return dna.replace("T", "U")
+    # Elemen Interaktif Expander untuk Detail Proses
+    with st.expander("🔍 Lihat 3 Langkah Utama Transkripsi"):
+        st.markdown("""
+        1. **Inisiasi:** RNA Polimerase menempel pada wilayah promoter DNA.
+        2. **Elongasi:** Pemanjangan untai mRNA seiring bergeraknya enzim di sepanjang DNA cetakan.
+        3. **Terminasi:** Transkripsi berhenti ketika enzim mencapai sekuens terminator.
+        """)
+        
+    # Fitur Cek Pemahaman Instan
+    st.subheader("💡 Cek Pemahaman Cepat")
+    pilihan_trans = st.radio(
+        "Jika untai DNA Template memiliki sekuens 'TAC', maka sekuens mRNA hasil transkripsinya adalah...",
+        ["ATG", "AUG", "UAC", "GUG"]
+    )
+    if st.button("Cek Jawaban"):
+        if pilihan_trans == "AUG":
+            st.success("🎉 Benar sekali! T berpasangan dengan A, A dengan U, dan C dengan G.")
+        else:
+            st.error("❌ Belum tepat. Ingat, pada RNA tidak ada Timin (T), melainkan digantikan oleh Urasil (U).")
 
-# 2. Logika Translasi (Memotong tiap 3 huruf / Kodon)
-# Contoh: "AUGGCC" dipotong menjadi ["AUG", "GCC"]
-# Lalu dicocokkan dengan kamus (dictionary) Asam Amino.
-    """, language="python")
+# ==============================================================================
+# 3. MATERI TRANSLASI
+# ==============================================================================
+elif menu == "2. Materi Translasi":
+    st.title("📑 Tahap 2: Translasi (Penerjemahan Kode)")
+    st.markdown("""
+    Setelah mRNA matang terbentuk, ia akan keluar dari nukleus menuju **Ribosom** di sitoplasma. 
+    Di ribosom inilah terjadi **Translasi**, yaitu proses penerjemahan urutan nukleotida (kodon) 
+    pada mRNA menjadi urutan asam amino yang menyusun protein.
+    """)
+    
+    # Menampilkan Tabel Kodon Interaktif bawaan Streamlit (Menggunakan Dataframe)
+    st.subheader("📋 Kamus Kodon Asam Amino Digital")
+    st.write("Berikut adalah sebagian contoh data penerjemahan kodon triplet berdasarkan algoritma biopython:")
+    
+    contoh_data = {
+        "Kodon (Triplet)": ["AUG", "UUU", "UUA", "GUC", "UAA"],
+        "Asam Amino Hasil": ["Metionin (START)", "Fenilalanin", "Leusin", "Valin", "STOP (Berhenti)"]
+    }
+    st.dataframe(pd.DataFrame(contoh_data), use_container_width=True)
 
-# --- MATERI 3: LAB VIRTUAL ---
-elif menu == "3. Lab Virtual (Simulasi Python)":
-    st.title("🧪 Lab Virtual Bioinformatika")
-    st.write("Silakan masukkan rantai **DNA Sense / Template** Anda sendiri di bawah ini untuk melihat bagaimana Python melakukan Transkripsi dan Translasi secara instan!")
+# ==============================================================================
+# 4. LABORATORIUM KOMPUTASI (SIMULASI INTERAKTIF STREAMLIT)
+# ==============================================================================
+elif menu == "3. Laboratorium Komputasi (Simulasi)":
+    st.title("🧪 Laboratorium Komputasi Bioinformatika")
+    st.subheader("Simulasikan Transkripsi & Translasi Menggunakan Mesin Logika Python")
     
-    # Input dari pengguna
-    input_dna = st.text_input("Masukkan Urutan DNA (Gunakan huruf A, T, C, G saja):", "ATGGCCGCAUGA")
+    st.write("""
+    Di sini kamu bertindak sebagai peneliti muda! Masukkan rantai **DNA Template (Sense)** kamu sendiri, 
+    dan lihat bagaimana komputer mengeksekusi transkripsi dan translasi secara langsung.
+    """)
     
-    # Validasi input sederhana
-    input_dna = input_dna.upper().strip()
+    # Input Teks untuk Sekuens DNA
+    input_dna = st.text_input("Masukkan Sekuens DNA (Gunakan huruf A, T, C, G saja):", value="TACTTCCGCACT").upper()
+    
+    # Validasi Input secara sederhana
     valid_bases = set("ATCG")
-    is_valid = all(base in valid_bases for base in input_dna)
-    
-    if input_dna and not is_valid:
-        st.warning("⚠️ Input mengandung karakter selain A, T, C, G. Mohon periksa kembali rantai DNA Anda.")
-    
-    if st.button("Jalankan Proses Simulasi 🚀") and is_valid:
-        st.markdown("### 📊 Hasil Pemrosesan Komputasi:")
+    if not set(input_dna).issubset(valid_bases):
+        st.warning("⚠️ Peringatan: Sekuens DNA hanya boleh mengandung karakter basa A, T, C, dan G!")
+    else:
+        st.success("✅ Sekuens DNA valid dan siap diproses komputasi.")
         
-        # Proses Transkripsi
-        hasil_mrna = transkripsi(input_dna)
-        st.info(f"**1. Hasil Transkripsi (mRNA):** \n `{hasil_mrna}`")
-        
-        # Proses Translasi
-        hasil_protein = translasi(hasil_mrna)
-        st.success(f"**2. Hasil Translasi (Rantai Asam Amino):** \n **{hasil_protein}**")
-        
-        # Penjelasan Konseptual
-        st.markdown("---")
-        st.markdown("**Analisis Konsep:**")
-        st.write(f"Komputer membaca rantai DNA sepanjang **{len(input_dna)} basa**. Hasil transkripsi menghasilkan mRNA dengan panjang yang sama namun basa **Timin (T) diganti menjadi Urasil (U)**. Pada tahap translasi, setiap **3 basa** dikelompokkan menjadi satu kodon untuk menentukan jenis asam aminonya.")
+        # Tombol Eksekusi Utama
+        if st.button("🧬 Jalankan Simulasi Bioinformatika"):
+            st.markdown("---")
+            
+            # --- PROSES TRANSKRIPSI (LOGIKA PYTHON) ---
+            peta_transkripsi = {'A': 'U', 'T': 'A', 'G': 'C', 'C': 'G'}
+            mrna_list = [peta_transkripsi[basa] for basa in input_dna]
+            mrna_hasil = "".join(mrna_list)
+            
+            st.subheader("1. Hasil Tahap Transkripsi")
+            col_dna, col_arrow, col_rna = st.columns([4, 1, 4])
+            col_dna.metric(label="DNA Template (Input)", value=input_dna)
+            col_arrow.markdown("<h2 style='text-align: center;'>➡️</h2>", unsafe_allow_html=True)
+            col_rna.metric(label="mRNA Hasil Cetakan", value=mrna_hasil)
+            
+            # --- PROSES TRANSLASI (LOGIKA PYTHON) ---
+            st.subheader("2. Hasil Tahap Translasi (Pencarian Kodon Triplet)")
+            
+            # Memecah mRNA menjadi triplet (Kodon)
+            kodon_list = [mrna_hasil[i:i+3] for i in range(0, len(mrna_hasil), 3)]
+            st.write(f"Kodon yang terdeteksi komputer dari rantai mRNA: `{kodon_list}`")
+            
+            # Menerjemahkan menggunakan Kamus Kodon
+            asam_amino_hasil = []
+            for kodon in kodon_list:
+                if len(kodon) == 3: # Memastikan triplet lengkap
+                    nama_asam = TABEL_KODON.get(kodon, "Tidak Diketahui")
+                    asam_amino_hasil.append(f"**{kodon}** ➡️ {nama_asam}")
+            
+            # Menampilkan hasil rantai protein dalam bentuk list terstruktur
+            for item in asam_amino_hasil:
+                st.write(f"* {item}")
+                
+            st.balloons() # Efek animasi keberhasilan simulasi
 
-# --- MATERI 4: KUIS EVALUASI ---
-elif menu == "4. Kuis Evaluasi Pemahaman":
-    st.title("✍️ Kuis Evaluasi Pemahaman Konsep")
-    st.write("Uji pemahaman konsep Anda mengenai Sintesis Protein dan penerapannya dalam komputasi di sini.")
+# ==============================================================================
+# 5. EVALUASI MANDIRI (KUIS INTERAKTIF)
+# ==============================================================================
+elif menu == "4. Evaluasi Mandiri":
+    st.title("📝 Uji Pemahaman Konsep (Evaluasi Mandiri)")
+    st.write("Jawablah pertanyaan di bawah ini untuk menguji sejauh mana pemahamanmu tentang materi ini.")
     
-    # Form untuk kuis
+    # Form untuk mengunci jawaban kuis sebelum dinilai
     with st.form("kuis_sintesis"):
-        # Pertanyaan 1
+        st.markdown("### **Soal 1**")
         q1 = st.radio(
-            "1. Jika sekuens DNA Template adalah 'TAC', maka sekuens mRNA hasil transkripsinya adalah...",
-            ["ATG", "AUG", "UAC", "GUG"]
-        )
-        
-        # Pertanyaan 2
-        q2 = st.radio(
-            "2. Di organel sel manakah fungsi kode perintah Python 'Translasi' terjadi di dunia biologi nyata?",
+            "Di organel manakah proses translasi mRNA menjadi protein terjadi?",
             ["Nukleus", "Mitokondria", "Ribosom", "Badan Golgi"]
         )
         
-        # Pertanyaan 3
-        q3 = st.radio(
-            "3. Mengapa pendekatan komputasi (Bioinformatika) penting dalam menganalisis sintesis protein?",
-            ["Karena protein di dalam tubuh berbentuk digital", "Untuk mempercepat penerjemahan rantai sekuens DNA yang berukuran raksasa", "Agar rantai DNA berubah menjadi bahasa pemrograman", "Karena komputer bisa mematikan mutasi genetik"]
+        st.markdown("### **Soal 2**")
+        q2 = st.radio(
+            "Kodon yang bertindak sebagai penanda dimulainya proses sintesis protein (Start Codon) adalah...",
+            ["UAA", "AUG", "UGA", "UAG"]
         )
         
-        # Tombol submit form
-        submitted = st.form_submit_button("Kirim Jawaban")
+        # Tombol Submit Form
+        submit_kuis = st.form_submit_button("Kirim Jawaban")
         
-        if submitted:
+        if submit_kuis:
             skor = 0
-            
-            # Cek Q1
-            if q1 == "AUG":
-                skor += 1
+            # Cek Soal 1
+            if q1 == "Ribosom":
+                skor += 50
+            # Cek Soal 2
+            if q2 == "AUG":
+                skor += 50
+                
+            st.markdown("### 📊 Hasil Evaluasi Kamu:")
+            if skor == 100:
+                st.success(f"Selamat! Nilai kamu **{skor}/100**. Kamu sudah menguasai konsep sintesis protein dengan sangat baik!")
+            else:
+                st.warning(f"Nilai kamu **{skor}/100**. Jangan berkecil hati, silakan ulas kembali materi atau coba laboratorium simulasi lagi!")
