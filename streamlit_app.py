@@ -409,3 +409,20 @@ st.markdown("""
     }
     </style>
 """, unsafe_allow_html=True)
+st.markdown("""
+    <style>
+    /* Mengubah warna background sidebar menjadi gradasi biru-hijau lembut */
+    [data-testid="stSidebar"] {
+        background: linear-gradient(180deg, #e0f2fe 0%, #f0f9ff 100%) !important;
+        border-right: 2px solid #bae6fd;
+    }
+
+    /* Mempertegas warna teks dan menu pilihan di sidebar */
+    [data-testid="stSidebar"] p, 
+    [data-testid="stSidebar"] span, 
+    [data-testid="stSidebar"] label {
+        color: #0c4a6e !important;
+        font-weight: 500;
+    }
+    </style>
+""", unsafe_allow_html=True)
