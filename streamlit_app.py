@@ -393,3 +393,19 @@ st.markdown("""
     }
     </style>
 """, unsafe_allow_html=True)
+st.markdown("""
+    <style>
+    /* Memberi latar belakang kartu putih semi-transparan untuk konten */
+    [data-testid="stVerticalBlock"] > div {
+        background-color: rgba(255, 255, 255, 0.88);
+        padding: 1.5rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Memastikan teks berwarna hitam tegas */
+    .stApp p, .stApp h1, .stApp h2, .stApp h3, .stApp li {
+        color: #1A1A1A !important;
+    }
+    </style>
+""", unsafe_allow_html=True)
