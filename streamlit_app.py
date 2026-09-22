@@ -409,20 +409,24 @@ st.markdown("""
     }
     </style>
 """, unsafe_allow_html=True)
+True)
 st.markdown("""
     <style>
-    /* Mengubah warna background sidebar menjadi gradasi biru-hijau lembut */
+    /* Background sidebar hitam semi-transparan dengan efek blur modern */
     [data-testid="stSidebar"] {
-        background: linear-gradient(180deg, #e0f2fe 0%, #f0f9ff 100%) !important;
-        border-right: 2px solid #bae6fd;
+        background-color: rgba(15, 23, 42, 0.85) !important;
+        backdrop-filter: blur(10px);
+        border-right: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    /* Mempertegas warna teks dan menu pilihan di sidebar */
+    /* Mengubah warna teks di sidebar menjadi putih terang */
     [data-testid="stSidebar"] p, 
     [data-testid="stSidebar"] span, 
-    [data-testid="stSidebar"] label {
-        color: #0c4a6e !important;
-        font-weight: 500;
+    [data-testid="stSidebar"] label,
+    [data-testid="stSidebar"] h1,
+    [data-testid="stSidebar"] h2,
+    [data-testid="stSidebar"] h3 {
+        color: #f8fafc !important;
     }
     </style>
 """, unsafe_allow_html=True)
