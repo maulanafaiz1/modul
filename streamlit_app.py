@@ -366,3 +366,30 @@ elif menu == "5. Bank Soal Evaluasi Mandiri":
         # Tampilkan detail pembahasan per soal
         for hint in detail_hasil:
             st.write(hint)
+
+import streamlit as st
+
+st.markdown("""
+    <style>
+    /* Mengubah background halaman utama */
+    .stApp {
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    }
+    
+    /* Mengubah background sidebar */
+    [data-testid="stSidebar"] {
+        background-color: #ffffff;
+    }
+    </style>
+""", unsafe_allow_html=True)
+st.markdown("""
+    <style>
+    .stApp {
+        background-image: url("https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?q=80&w=1920");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+    </style>
+""", unsafe_allow_html=True)
