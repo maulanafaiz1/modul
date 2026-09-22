@@ -74,7 +74,7 @@ if menu == "Halaman Utama & Silabus":
     kamu tidak hanya menghafal, melainkan dapat memanipulasi sekuens basa nitrogen dan melihat dampaknya secara langsung.
     """)
     
-    tabs = st.tabs(["🎯 Capaian Pembelajaran", "📖 Petunjuk Penggunaan", "👥 Tim Pengembang"])
+    tabs = st.tabs(["🎯 EH ANAK KAPLING", "📖 Petunjuk Penggunaan", "👥 Tim Pengembang"])
     with tabs[0]:
         st.markdown("""
         * **Menganalisis** hubungan antara struktur DNA, gen, dan kromosom dalam penentuan sifat makhluk hidup.
