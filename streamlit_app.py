@@ -367,4 +367,62 @@ elif menu == "5. Bank Soal Evaluasi Mandiri":
         for hint in detail_hasil:
             st.write(hint)
 
+import streamlit as st
 
+st.markdown("""
+    <style>
+    /* Mengubah background halaman utama */
+    .stApp {
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    }
+    
+    /* Mengubah background sidebar */
+    [data-testid="stSidebar"] {
+        background-color: #ffffff;
+    }
+    </style>
+""", unsafe_allow_html=True)
+st.markdown("""
+    <style>
+    .stApp {
+        background-image: url("https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?q=80&w=1920");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+    </style>
+""", unsafe_allow_html=True)
+st.markdown("""
+    <style>
+    /* Memberi latar belakang kartu putih semi-transparan untuk konten */
+    [data-testid="stVerticalBlock"] > div {
+        background-color: rgba(255, 255, 255, 0.88);
+        padding: 1.5rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Memastikan teks berwarna hitam tegas */
+    .stApp p, .stApp h1, .stApp h2, .stApp h3, .stApp li {
+        color: #1A1A1A !important;
+    }
+    </style>
+""", unsafe_allow_html=True)
+st.markdown("""
+    <style>
+    /* Mengubah warna background sidebar menjadi gradasi biru-hijau lembut */
+    [data-testid="stSidebar"] {
+        background: linear-gradient(180deg, #e0f2fe 0%, #f0f9ff 100%) !important;
+        border-right: 2px solid #bae6fd;
+    }
+
+    /* Mempertegas warna teks dan menu pilihan di sidebar */
+    [data-testid="stSidebar"] p, 
+    [data-testid="stSidebar"] span, 
+    [data-testid="stSidebar"] label {
+        color: #0c4a6e !important;
+        font-weight: 500;
+    }
+    </style>
+""", unsafe_allow_html=True)
