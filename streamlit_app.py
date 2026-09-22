@@ -366,29 +366,3 @@ elif menu == "5. Bank Soal Evaluasi Mandiri":
         # Tampilkan detail pembahasan per soal
         for hint in detail_hasil:
             st.write(hint)
-
-import streamlit as st
-import requests
-from streamlit_lottie import st_lottie
-
-# Fungsi untuk memuat file animasi JSON dari URL
-def load_lottieurl(url: str):
-    r = requests.get(url)
-    if r.status_code != 200:
-        return None
-    return r.json()
-
-# Memanggil file animasi (Contoh: Animasi Sains / DNA)
-lottie_dna = load_lottieurl("https://assets5.lottiefiles.com/packages/lf20_5njp3vgg.json")
-
-# Menampilkan Animasi di Halaman
-st.title("🧬 E-Modul Interaktif")
-
-col1, col2 = st.columns([2, 1])
-
-with col1:
-    st.write("Selamat datang di modul interaktif sintesis protein!")
-
-with col2:
-    if lottie_dna:
-        st_lottie(lottie_dna, height=180, key="dna_animation")
