@@ -409,25 +409,6 @@ st.markdown("""
     }
     </style>
 """, unsafe_allow_html=True)
-True)
 
-st.markdown("""
-    <style>
-    /* Background sidebar hitam semi-transparan dengan efek blur modern */
-    [data-testid="stSidebar"] {
-        background-color: rgba(15, 23, 42, 0.85) !important;
-        backdrop-filter: blur(10px);
-        border-right: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    /* Mengubah warna teks di sidebar menjadi putih terang */
-    [data-testid="stSidebar"] p, 
-    [data-testid="stSidebar"] span, 
-    [data-testid="stSidebar"] label,
-    [data-testid="stSidebar"] h1,
-    [data-testid="stSidebar"] h2,
-    [data-testid="stSidebar"] h3 {
-        color: #f8fafc !important;
-    }
     </style>
 """, unsafe_allow_html=True)
