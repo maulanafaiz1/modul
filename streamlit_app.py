@@ -426,18 +426,3 @@ st.markdown("""
     }
     </style>
 """, unsafe_allow_html=True)
-
-import streamlit as st
-import base64
-from io import BytesIO
-from PIL import Image
-
-# 1. Simpan string Base64 gambar milikmu ke dalam variabel
-base64_str = "iVBORw0KGgoAAAANSUhEUgAAAJYAAACUCAMAAABGFyDbAAABsFBMVEX//////AEAAAD//AABgjL//wBERETPz88cHBz//xcaGhr6+vrp6embm5v8/QAAAAbz8/OlpaXf39/CwsKxsbEAAA+7u7vX19dMTEwiIiLJyck/Pz90dHTkCRZ8fHxlZWVZWVkuLi6Tk5M2NjaEhIQMDAz//y8AABVBQUYAfDDWAA4Agtt9eyD19SDDxSZOTlUXEgDt7CNVVhh4diUeHADY2SqkojDn5SmLiCQPDACVlii5uS5rahxIRAPQ0SzNzD80MABWlWvq+SOGtWoAfOMAg9NeWAAlJTE4OACvrComJQA/PBA1NT2alj5BQh8uKhlpZzATEyNOTh/e30k0NBSKhkmEgzm1skI6PSagnFFcXDOprUllXhsrHxUfFA6fo5dQXk9BTUEVKxsDQhcPcDMHWCN/tJEAHwAeXDcKGg5ne2y03L1qtIc4klcbgkTi7+UAbBC2z75DZ1FxnYEAWhUveEaetp6myi0lhRuJthW31BdTkhRyqyDP6B89fxH43Rntuh31zSHYbBfXMhLehRXfnw/TTg+vx1Y9k6OWvVtNmZgih698rnUficTA1k4mdYYSZI0UAAAgAEl undisputed..." # tempelkan teks base64 lengkapmu di sini
-
-# 2. Dekode string Base64 menjadi objek gambar
-image_data = base64.b64decode(base64_str)
-image = Image.open(BytesIO(image_data))
-
-# 3. Tampilkan gambar di Sidebar atau Halaman Utama
-st.sidebar.image(image, width=120)
