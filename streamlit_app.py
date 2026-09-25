@@ -426,3 +426,8 @@ st.markdown("""
     }
     </style>
 """, unsafe_allow_html=True)
+
+import streamlit as st
+
+# Menampilkan logo kecil di pojok kiri atas
+st.logo("https://upload.wikimedia.org/wikipedia/commons/e/e5/Untirta_logo.png")
