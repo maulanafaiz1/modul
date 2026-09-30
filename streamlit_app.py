@@ -426,3 +426,7 @@ st.markdown("""
     }
     </style>
 """, unsafe_allow_html=True)
+import streamlit as st
+
+# Memanggil file logo.png yang sudah ada di folder GitHub-mu
+st.sidebar.image("logo.png", width=120)
