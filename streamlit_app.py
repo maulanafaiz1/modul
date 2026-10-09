@@ -90,8 +90,8 @@ if menu == "Halaman Utama & Silabus":
         """)
     with tabs[2]:
         st.markdown("""
-        * **Peneliti:** Jurusan Pendidikan Biologi, Universitas Sultan Ageng Tirtayasa (UNTIRTA).
-        * **Subjek Uji Coba:** Peserta Didik Kelas XI SMAN 1 Cikande.
+        * **Peneliti:** Maulana Faiz Almushlih, Jurusan Pendidikan Biologi, Universitas Sultan Ageng Tirtayasa (UNTIRTA).
+        * **Subjek Uji Coba:** Peserta Didik Kelas XII SMAN 1 Cikande.
         """)
 
 # ==============================================================================
