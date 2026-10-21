@@ -35,7 +35,7 @@ TABEL_KODON = {
 # 2. SIDEBAR NAVIGATION & PROGRESS TRACKER
 # ==============================================================================
 st.sidebar.image("https://fkip.untirta.ac.id/wp-content/uploads/2019/08/UNTIRTA-NO-BACKGROUND.png", width=110)
-st.sidebar.title("🧬 Menu E-Modul")
+st.sidebar.title("🧬 Menu E-ModulL")
 st.sidebar.caption("Pendekatan Komputasi untuk Miskonsepsi Sintesis Protein")
 
 menu = st.sidebar.radio(
