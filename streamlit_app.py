@@ -5,7 +5,7 @@ import pandas as pd
 # 1. KONFIGURASI HALAMAN & TEMA (User-Friendly & Professional Layout)
 # ==============================================================================
 st.set_page_config(
-    page_title="E-Modul Bioinformatika: Sintesis Protein Lengkap",
+    page_title="E-Modul Bioinformatika: Sintesis Protein",
     page_icon="🧬",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -42,11 +42,11 @@ menu = st.sidebar.radio(
     "Silakan Pilih Sub-Materi:",
     [
         "Halaman Utama & Silabus", 
-        "1. Pendalaman Materi Transkripsi", 
-        "2. Pendalaman Materi Translasi", 
+        "1. Materi Transkripsi", 
+        "2. Materi Translasi", 
         "3. Kamus Kodon Interaktif",
         "4. Laboratorium Komputasi & Mutasi", 
-        "5. Bank Soal Evaluasi Mandiri"
+        "5. Evaluasi Mandiri"
     ]
 )
 
@@ -65,8 +65,8 @@ st.sidebar.caption(f"Progress Penyelesaian Modul: {int(progress_score)}%")
 # 3. HALAMAN UTAMA & SILABUS
 # ==============================================================================
 if menu == "Halaman Utama & Silabus":
-    st.title("🧬 E-Modul Interaktif Bioinformatika Berbantuan Python")
-    st.subheader("Materi Pokok: Mekanisme Ekspresi Gen dan Sintesis Protein")
+    st.title("🧬 E-Modul Interaktif Bioinformatika")
+    st.subheader("Materi Pokok: Sintesis Protein")
     
     st.info("""
     **Deskripsi E-Modul:** Media pembelajaran ini dikembangkan untuk memberikan visualisasi konkret 
@@ -77,9 +77,7 @@ if menu == "Halaman Utama & Silabus":
     tabs = st.tabs(["🚩  Capaian Pembelajaran", "📖 Petunjuk Penggunaan", "👥 Tim Pengembang"])
     with tabs[0]:
         st.markdown("""
-        * **Menganalisis** hubungan antara struktur DNA, gen, dan kromosom dalam penentuan sifat makhluk hidup.
-        * **Menjelaskan** tahapan mekanisme transkripsi (inisiasi, elongasi, terminasi) dan modifikasi pasca-transkripsi.
-        * **Menjelaskan** tahapan mekanisme translasi pada ribosom serta meramalkan dampak mutasi titik (*point mutation*).
+        Mengaitkan hubungan antara struktur dan fungsi organel di dalam sel; menerapkan prinsip-prinsip bioproses yang terjadi di dalam sel; menganalisis keterkaitan antar sistem organ dalam tubuh untuk merespons stimulus internal dan eksternal; menerapkan prinsip pewarisan sifat; mengaitkan mekanisme evolusi dengan proses terjadi keanekaragaman dan kelangsungan hidup organisme; menerapkan prinsip pertumbuhan dan perkembangan; serta menganalisis proses bioteknologi modern.
         """)
     with tabs[1]:
         st.markdown("""
