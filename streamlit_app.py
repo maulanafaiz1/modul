@@ -35,15 +35,15 @@ TABEL_KODON = {
 # 2. SIDEBAR NAVIGATION & PROGRESS TRACKER
 # ==============================================================================
 st.sidebar.image("https://fkip.untirta.ac.id/wp-content/uploads/2019/08/UNTIRTA-NO-BACKGROUND.png", width=110)
-st.sidebar.title("🧬 Menu E-ModulL")
+st.sidebar.title("🧬 Menu E-Modul")
 st.sidebar.caption("Pendekatan Komputasi untuk Miskonsepsi Sintesis Protein")
 
 menu = st.sidebar.radio(
     "Silakan Pilih Sub-Materi:",
     [
         "Halaman Utama & Silabus", 
-        "1. Materi Transkripsi", 
-        "2. Materi Translasi", 
+        "1. Pendalaman Materi Transkripsi", 
+        "2. Pendalaman Materi Translasi", 
         "3. Kamus Kodon Interaktif",
         "4. Laboratorium Komputasi & Mutasi", 
         "5. Evaluasi Mandiri"
